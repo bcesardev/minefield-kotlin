@@ -12,7 +12,7 @@ fun main() {
 
 class MainScreen : JFrame() {
 
-    private val board = Board(numberOfLines = 16, numberOfColumns = 30, numberOfMines = 89)
+    private val board = Board(numberOfLines = 16, numberOfColumns = 30, numberOfMines = 50)
     private val boardPanel = BoardPanel(board)
 
     init {
@@ -22,15 +22,15 @@ class MainScreen : JFrame() {
         setSize(690, 438)
         setLocationRelativeTo(null)
         defaultCloseOperation = EXIT_ON_CLOSE
-        title = "Mine Field"
+        title = "Minefield"
         isVisible = true
     }
 
     private fun showResult(event: BoardEvent) {
         SwingUtilities.invokeLater {
             val msg = when (event) {
-                BoardEvent.VICTORY -> "You win!"
-                BoardEvent.DEFEAT -> "You lost. Game over!"
+                BoardEvent.VICTORY -> "You win, Congratulations!"
+                BoardEvent.DEFEAT -> "You lost, Game Over!"
             }
 
             JOptionPane.showMessageDialog(this, msg)

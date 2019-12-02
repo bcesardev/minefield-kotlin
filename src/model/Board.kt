@@ -1,11 +1,11 @@
 package model
 
 import java.util.*
-import kotlin.collections.ArrayList
 
 enum class BoardEvent { VICTORY, DEFEAT }
 
 class Board(val numberOfLines: Int, val numberOfColumns: Int, private val numberOfMines: Int) {
+
     private val fields = ArrayList<ArrayList<Field>>()
     private val callbacks = ArrayList<(BoardEvent) -> Unit>()
 
@@ -55,7 +55,7 @@ class Board(val numberOfLines: Int, val numberOfColumns: Int, private val number
             columnDrawn = generator.nextInt(numberOfColumns)
 
             val fieldDrawn = fields[lineDrawn][columnDrawn]
-            if (fieldDrawn.safed) {
+            if (fieldDrawn.safe) {
                 fieldDrawn.mine()
                 numberOfMinesActual++
             }

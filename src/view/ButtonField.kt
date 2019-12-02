@@ -46,7 +46,7 @@ class ButtonField(private val field: Field) : JButton() {
 
     private fun applyOpenedStyle() {
         background = COLOR_BG_NORMAL
-        border = BorderFactory.createLineBorder(Color.gray)
+        border = BorderFactory.createLineBorder(Color.GRAY)
 
         foreground = when (field.numberOfNearbyMineds) {
             1 -> COLOR_TXT_GREEN
@@ -58,7 +58,6 @@ class ButtonField(private val field: Field) : JButton() {
 
         text = if (field.numberOfNearbyMineds > 0) field.numberOfNearbyMineds.toString() else ""
     }
-
 
     private fun applyMarkedStyle() {
         background = COLOR_BG_MARKING

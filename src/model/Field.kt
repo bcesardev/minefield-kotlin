@@ -1,4 +1,4 @@
- package model
+package model
 
 enum class FieldEvent { OPENING, MARKING, UNMARKING, EXPLOSION, RESET }
 
@@ -14,11 +14,11 @@ data class Field(val line: Int, val column: Int) {
     // Only reading
     val unmarked: Boolean get() = !marked
     val closed: Boolean get() = !opened
-    val safed: Boolean get() = !mined
-    val goalAchieved: Boolean get() = safed && opened || mined && marked
+    val safe: Boolean get() = !mined
+    val goalAchieved: Boolean get() = safe && opened || mined && marked
     val numberOfNearbyMineds: Int get() = nearbies.filter { it.mined }.size
-    val safeNearby: Boolean
-        get() = nearbies.map { it.safed }.reduce { result, safed -> result && safed }
+    val nearbySafe: Boolean
+        get() = nearbies.map { it.safe }.reduce { result, safe -> result && safe }
 
     fun addNearby(nearby: Field) {
         nearbies.add(nearby)
@@ -35,7 +35,7 @@ data class Field(val line: Int, val column: Int) {
                 callbacks.forEach { it(this, FieldEvent.EXPLOSION) }
             } else {
                 callbacks.forEach { it(this, FieldEvent.OPENING) }
-                nearbies.filter { it.closed && it.safed && it.safeNearby }.forEach { it.open() }
+                nearbies.filter { it.closed && it.safe && it.nearbySafe }.forEach { it.open() }
             }
         }
     }
