@@ -24,7 +24,6 @@ class Board(val numberOfLines: Int, val numberOfColumns: Int, private val number
                 fields[line].add(newField)
             }
         }
-
     }
 
     private fun connectNearbies() {
@@ -52,7 +51,7 @@ class Board(val numberOfLines: Int, val numberOfColumns: Int, private val number
         var numberOfMinesActual = 0
 
         while (numberOfMinesActual < this.numberOfMines) {
-            lineDrawn = generator.nextInt(numberOfMines)
+            lineDrawn = generator.nextInt(numberOfLines)
             columnDrawn = generator.nextInt(numberOfColumns)
 
             val fieldDrawn = fields[lineDrawn][columnDrawn]
