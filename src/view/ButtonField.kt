@@ -27,7 +27,7 @@ class ButtonField(private val field: Field) : JButton() {
 
     private fun applyStyle(field: Field, event: FieldEvent) {
         when (event) {
-            FieldEvent.EXPLOSION -> applyBlowUpStyle()
+            FieldEvent.EXPLOSION -> applyExplodedStyle()
             FieldEvent.OPENING -> applyOpenedStyle()
             FieldEvent.MARKING -> applyMarkedStyle()
             else -> applyDefaultStyke()
@@ -39,7 +39,7 @@ class ButtonField(private val field: Field) : JButton() {
         }
     }
 
-    private fun applyBlowUpStyle() {
+    private fun applyExplodedStyle() {
         background = COLOR_BG_EXPLOSION
         text = "X"
     }
@@ -48,7 +48,7 @@ class ButtonField(private val field: Field) : JButton() {
         background = COLOR_BG_NORMAL
         border = BorderFactory.createLineBorder(Color.GRAY)
 
-        foreground = when (field.numberOfNearbyMineds) {
+        foreground = when (field.qtyOfNearbyMineds) {
             1 -> COLOR_TXT_GREEN
             2 -> Color.BLUE
             3 -> Color.YELLOW
@@ -56,7 +56,7 @@ class ButtonField(private val field: Field) : JButton() {
             else -> Color.PINK
         }
 
-        text = if (field.numberOfNearbyMineds > 0) field.numberOfNearbyMineds.toString() else ""
+        text = if (field.qtyOfNearbyMineds > 0) field.qtyOfNearbyMineds.toString() else ""
     }
 
     private fun applyMarkedStyle() {

@@ -4,7 +4,7 @@ enum class FieldEvent { OPENING, MARKING, UNMARKING, EXPLOSION, RESET }
 
 data class Field(val line: Int, val column: Int) {
 
-    private val nearbies = ArrayList<Field>()
+    private val nearbyList = ArrayList<Field>()
     private val callbacks = ArrayList<(Field, FieldEvent) -> Unit>()
 
     var marked: Boolean = false
@@ -16,12 +16,12 @@ data class Field(val line: Int, val column: Int) {
     val closed: Boolean get() = !opened
     val safe: Boolean get() = !mined
     val goalAchieved: Boolean get() = safe && opened || mined && marked
-    val numberOfNearbyMineds: Int get() = nearbies.filter { it.mined }.size
+    val qtyOfNearbyMineds: Int get() = nearbyList.filter { it.mined }.size
     val nearbySafe: Boolean
-        get() = nearbies.map { it.safe }.reduce { result, safe -> result && safe }
+        get() = nearbyList.map { it.safe }.reduce { result, safe -> result && safe }
 
     fun addNearby(nearby: Field) {
-        nearbies.add(nearby)
+        nearbyList.add(nearby)
     }
 
     fun onEvent(callback: (Field, FieldEvent) -> Unit) {
@@ -35,7 +35,7 @@ data class Field(val line: Int, val column: Int) {
                 callbacks.forEach { it(this, FieldEvent.EXPLOSION) }
             } else {
                 callbacks.forEach { it(this, FieldEvent.OPENING) }
-                nearbies.filter { it.closed && it.safe && it.nearbySafe }.forEach { it.open() }
+                nearbyList.filter { it.closed && it.safe && nearbySafe }.forEach { it.open() }
             }
         }
     }

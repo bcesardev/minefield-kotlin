@@ -12,7 +12,7 @@ fun main() {
 
 class MainScreen : JFrame() {
 
-    private val board = Board(numberOfLines = 16, numberOfColumns = 30, numberOfMines = 50)
+    private val board = Board(qtyOfLines = 16, qtyOfColumns = 30, qtyOfMines = 50)
     private val boardPanel = BoardPanel(board)
 
     init {

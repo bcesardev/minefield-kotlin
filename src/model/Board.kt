@@ -4,21 +4,21 @@ import java.util.*
 
 enum class BoardEvent { VICTORY, DEFEAT }
 
-class Board(val numberOfLines: Int, val numberOfColumns: Int, private val numberOfMines: Int) {
+class Board(val qtyOfLines: Int, val qtyOfColumns: Int, private val qtyOfMines: Int) {
 
     private val fields = ArrayList<ArrayList<Field>>()
     private val callbacks = ArrayList<(BoardEvent) -> Unit>()
 
     init {
         generateFields()
-        connectNearbies()
+        connectNearby()
         sortMines()
     }
 
     private fun generateFields() {
-        for (line in 0 until numberOfLines) {
+        for (line in 0 until qtyOfLines) {
             fields.add(ArrayList())
-            for (column in 0 until numberOfColumns) {
+            for (column in 0 until qtyOfColumns) {
                 val newField = Field(line, column)
                 newField.onEvent(this::checkVictoryOrDefeat)
                 fields[line].add(newField)
@@ -26,11 +26,11 @@ class Board(val numberOfLines: Int, val numberOfColumns: Int, private val number
         }
     }
 
-    private fun connectNearbies() {
-        forEachFields { connectNearbies(it) }
+    private fun connectNearby() {
+        forEachFields { connectNearby(it) }
     }
 
-    private fun connectNearbies(field: Field) {
+    private fun connectNearby(field: Field) {
         val (line, column) = field
         val lines = arrayOf(line - 1, line, line + 1)
         val columns = arrayOf(column - 1, column, column + 1)
@@ -46,18 +46,18 @@ class Board(val numberOfLines: Int, val numberOfColumns: Int, private val number
     private fun sortMines() {
         val generator = Random()
 
-        var lineDrawn = -1
-        var columnDrawn = -1
-        var numberOfMinesActual = 0
+        var drawnLine = -1
+        var drawnColumn = -1
+        var qtyOfMinesActual = 0
 
-        while (numberOfMinesActual < this.numberOfMines) {
-            lineDrawn = generator.nextInt(numberOfLines)
-            columnDrawn = generator.nextInt(numberOfColumns)
+        while (qtyOfMinesActual < this.qtyOfMines) {
+            drawnLine = generator.nextInt(qtyOfLines)
+            drawnColumn = generator.nextInt(qtyOfColumns)
 
-            val fieldDrawn = fields[lineDrawn][columnDrawn]
-            if (fieldDrawn.safe) {
-                fieldDrawn.mine()
-                numberOfMinesActual++
+            val drawnField = fields[drawnLine][drawnColumn]
+            if (drawnField.safe) {
+                drawnField.mine()
+                qtyOfMinesActual++
             }
         }
     }
